@@ -93,7 +93,7 @@ jobs:
           SITE_URL: https://bluexdeev25432.github.io/LiquidGlassX
         run: |
           set -euo pipefail
-          curl -fsSIL "$SITE_URL/sileo/" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
+          curl -fsSIL "$SITE_URL/sileo/index.html" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
           curl -fsSL "$SITE_URL/sileo/dists/stable/Release" | grep -Fq 'Suite: stable'
           curl -fsSL "$SITE_URL/sileo/dists/stable/main/binary-iphoneos-arm64/Packages" | grep -Fq 'Package: com.blue.liquidglassx'
           DEB_PATH=$(curl -fsSL "$SITE_URL/sileo/dists/stable/main/binary-iphoneos-arm64/Packages" | awk '$1=="Filename:" && $2 ~ /pool\/main\/com\.blue\.liquidglassx\// {print $2; exit}')
