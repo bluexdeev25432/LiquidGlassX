@@ -45,20 +45,7 @@ jobs:
         run: npm run build
 
       - name: Validate Sileo repository metadata
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -f sileo-repo/dists/stable/Release
-          test -f sileo-repo/dists/stable/main/binary-iphoneos-arm64/Packages
-          test -f sileo-repo/dists/stable/main/binary-iphoneos-arm64/Packages.gz
-          PKG=$(find sileo-repo/pool/main/com.blue.liquidglassx -type f -name '*.deb' | sort | tail -n 1)
-          test -n "$PKG"
-          grep -Fq "Package: com.blue.liquidglassx" sileo-repo/dists/stable/main/binary-iphoneos-arm64/Packages
-          grep -Fq "Architecture: iphoneos-arm64" sileo-repo/dists/stable/main/binary-iphoneos-arm64/Packages
-          grep -Fq "Filename: pool/main/com.blue.liquidglassx/$(basename "$PKG")" sileo-repo/dists/stable/main/binary-iphoneos-arm64/Packages
-          EXPECTED_SHA=$(sha256sum "$PKG" | awk '{print $1}')
-          grep -Fq "SHA256: $EXPECTED_SHA" sileo-repo/dists/stable/main/binary-iphoneos-arm64/Packages
-          echo "Sileo repository metadata is consistent with $(basename "$PKG")"
+        run: bash scripts/validate-sileo-repo.sh
 
       - name: Publish Sileo repository under GitHub Pages
         shell: bash
@@ -94,10 +81,32 @@ jobs:
         run: |
           set -euo pipefail
           curl -fsSIL "$SITE_URL/sileo/index.html" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
-          curl -fsSL "$SITE_URL/sileo/dists/stable/Release" | grep -Fq 'Suite: stable'
-          curl -fsSL "$SITE_URL/sileo/dists/stable/main/binary-iphoneos-arm64/Packages" | grep -Fq 'Package: com.blue.liquidglassx'
-          DEB_PATH=$(curl -fsSL "$SITE_URL/sileo/dists/stable/main/binary-iphoneos-arm64/Packages" | awk '$1=="Filename:" && $2 ~ /pool\/main\/com\.blue\.liquidglassx\// {print $2; exit}')
+          curl -fsSIL "$SITE_URL/sileo/Release" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
+          curl -fsSIL "$SITE_URL/sileo/Packages" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
+          curl -fsSIL "$SITE_URL/sileo/Packages.gz" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
+          curl -fsSL "$SITE_URL/sileo/Release" -o /tmp/sileo-Release
+          grep -Fq 'Architectures: iphoneos-arm64' /tmp/sileo-Release
+          curl -fsSL "$SITE_URL/sileo/Packages" -o /tmp/sileo-Packages
+          curl -fsSL "$SITE_URL/sileo/Packages.gz" -o /tmp/sileo-Packages.gz
+          gzip -dc /tmp/sileo-Packages.gz | cmp -s - /tmp/sileo-Packages
+          grep -Fq 'Package: com.blue.liquidglassx' /tmp/sileo-Packages
+          grep -Fq 'Version: 0.0.1-7+debug' /tmp/sileo-Packages
+          grep -Fq 'Architecture: iphoneos-arm64' /tmp/sileo-Packages
+          DEB_PATH=$(awk '$1=="Filename:" {print $2; exit}' /tmp/sileo-Packages)
+          EXPECTED_SHA=$(awk '$1=="SHA256:" {print $2; exit}' /tmp/sileo-Packages)
+          PACKAGES_SHA=$(sha256sum /tmp/sileo-Packages | awk '{print $1}')
+          PACKAGES_SIZE=$(wc -c < /tmp/sileo-Packages | tr -d ' ')
+          PACKAGES_GZ_SHA=$(sha256sum /tmp/sileo-Packages.gz | awk '{print $1}')
+          PACKAGES_GZ_SIZE=$(wc -c < /tmp/sileo-Packages.gz | tr -d ' ')
+          grep -Eq "^[[:space:]]+$PACKAGES_SHA[[:space:]]+$PACKAGES_SIZE[[:space:]]+Packages$" /tmp/sileo-Release
+          grep -Eq "^[[:space:]]+$PACKAGES_GZ_SHA[[:space:]]+$PACKAGES_GZ_SIZE[[:space:]]+Packages.gz$" /tmp/sileo-Release
           test -n "$DEB_PATH"
+          test -n "$EXPECTED_SHA"
           DEB_URL="$SITE_URL/sileo/$DEB_PATH"
           curl -fsSIL "$DEB_URL" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
-          echo "Deployed Pages URL and unsigned Sileo metadata are responding successfully."
+          curl -fsSL "$DEB_URL" -o /tmp/sileo-package.deb
+          printf '%s  %s\n' "$EXPECTED_SHA" /tmp/sileo-package.deb | sha256sum --check --status
+          test "$(dpkg-deb -f /tmp/sileo-package.deb Package)" = com.blue.liquidglassx
+          test "$(dpkg-deb -f /tmp/sileo-package.deb Version)" = 0.0.1-7+debug
+          test "$(dpkg-deb -f /tmp/sileo-package.deb Architecture)" = iphoneos-arm64
+          echo "Flat Sileo Release, Packages, and package artifact all match the verified published package."

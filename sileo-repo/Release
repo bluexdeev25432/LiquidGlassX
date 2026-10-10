@@ -1,0 +1,19 @@
+Architectures: iphoneos-arm64
+Codename: stable
+Date: Sat, 10 Oct 2026 17:25:24 +0000
+Description: LiquidGlassX rootless jailbreak packages
+Label: LiquidGlassX
+Origin: LiquidGlassX
+Suite: stable
+MD5Sum:
+ 4f5c1628c638466861e47399e2a423bc              802 Packages
+ 9e2d371a851fb7ddf7db3a2c8932ffaa              545 Packages.gz
+SHA1:
+ dc744720369a1f336af15acb40604278bb155d4d              802 Packages
+ ca84330e7ed6ba7eea2e6169610abe9651a20f62              545 Packages.gz
+SHA256:
+ aae2cceac39525cd1180920f1e40089c923c258833619801073cc2bc53210898              802 Packages
+ e244fc585e1eda7ee8314ca46f4cf78aa7c0c9a4dc8e0d681c9e40f04c096beb              545 Packages.gz
+SHA512:
+ 0bfc0b7df6cbd6ea1227535459bead42637725042132b28907b03d72e0ef86d00c5d59401cf48f9091859fb3385c95562e06a3ac50a3bf3e93bd631dfa8de31c              802 Packages
+ a9a652f60604fa6885a6ae18b48f513d5ea1be10ecbca6835f7fb37baca42bd2201ea446fa816726d0c413282e85976072a50e409d9d28995becb229e87c2ebe              545 Packages.gz
