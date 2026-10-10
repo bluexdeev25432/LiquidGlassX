@@ -2,6 +2,13 @@ import { expect, test } from '@playwright/test';
 import { PNG } from 'pngjs';
 
 test.beforeEach(async ({ page }) => {
+  page.on('pageerror', (error) => console.error(`[browser pageerror] ${error.message}`));
+  page.on('console', (message) => {
+    if (message.type() === 'error') console.error(`[browser console] ${message.text()}`);
+  });
+  page.on('response', (response) => {
+    if (response.status() >= 400) console.error(`[browser response ${response.status()}] ${response.url()}`);
+  });
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'hardwareConcurrency', { configurable: true, get: () => 8 });
     Object.defineProperty(navigator, 'deviceMemory', { configurable: true, get: () => 8 });
