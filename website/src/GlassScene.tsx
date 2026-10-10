@@ -49,7 +49,9 @@ export default function GlassScene() {
           alpha: true,
           antialias: true,
           powerPreference: 'high-performance',
+          preserveDrawingBuffer: true,
         });
+        activeRenderer.setClearColor(0x000000, 0);
         renderer = activeRenderer;
       } catch {
         canvas.dataset.unavailable = 'true';
