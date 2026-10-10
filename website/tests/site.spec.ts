@@ -51,10 +51,16 @@ test('desktop demo controls and release details work', async ({ page }) => {
 
 test('desktop 3D canvas renders non-empty pixels', async ({ page }) => {
   test.setTimeout(60_000);
-  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.setViewportSize({ width: 960, height: 720 });
   await page.goto('/');
   const canvas = page.locator('canvas.hero-scene');
   await expect(canvas).toHaveAttribute('data-loaded', 'true', { timeout: 15_000 });
+
+  await page.evaluate(() => new Promise<void>((resolve) => {
+    const nextFrame = window.requestAnimationFrame.bind(window);
+    window.requestAnimationFrame = () => 0;
+    nextFrame(() => resolve());
+  }));
 
   const dataUrl = await canvas.evaluate((element: HTMLCanvasElement) => element.toDataURL());
   const image = PNG.sync.read(Buffer.from(dataUrl.split(',')[1], 'base64'));
