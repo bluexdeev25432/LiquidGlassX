@@ -86,6 +86,7 @@ jobs:
           curl -fsSIL "$SITE_URL/sileo/Packages.gz" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
           curl -fsSL "$SITE_URL/sileo/Release" -o /tmp/sileo-Release
           grep -Fq 'Architectures: iphoneos-arm64' /tmp/sileo-Release
+          curl -fsSL "$SITE_URL/sileo/index.html" -o /tmp/sileo-index.html
           curl -fsSL "$SITE_URL/sileo/Packages" -o /tmp/sileo-Packages
           curl -fsSL "$SITE_URL/sileo/Packages.gz" -o /tmp/sileo-Packages.gz
           gzip -dc /tmp/sileo-Packages.gz | cmp -s - /tmp/sileo-Packages
@@ -102,6 +103,7 @@ jobs:
           grep -Eq "^[[:space:]]+$PACKAGES_GZ_SHA[[:space:]]+$PACKAGES_GZ_SIZE[[:space:]]+Packages.gz$" /tmp/sileo-Release
           test -n "$DEB_PATH"
           test -n "$EXPECTED_SHA"
+          grep -Fq "href=\"./$DEB_PATH\"" /tmp/sileo-index.html
           DEB_URL="$SITE_URL/sileo/$DEB_PATH"
           curl -fsSIL "$DEB_URL" | grep -Eq 'HTTP/.* 200|HTTP/.* 301|HTTP/.* 302'
           curl -fsSL "$DEB_URL" -o /tmp/sileo-package.deb

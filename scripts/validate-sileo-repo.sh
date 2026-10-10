@@ -96,6 +96,12 @@ if [[ ! -f "$REPO_DIR/$(awk '/^Filename: / {print $2; exit}' "$PACKAGES_FILE")" 
   exit 1
 fi
 
+PACKAGE_RELATIVE_PATH="$(awk '/^Filename: / {print $2; exit}' "$PACKAGES_FILE")"
+if ! grep -Fq "href=\"./$PACKAGE_RELATIVE_PATH\"" "$INDEX_FILE"; then
+  echo "[LiquidGlassX] Sileo landing page does not link to the package in Packages metadata" >&2
+  exit 1
+fi
+
 if ! grep -Fq 'Architectures: iphoneos-arm64' "$RELEASE_FILE"; then
   echo "[LiquidGlassX] Release metadata is missing iphoneos-arm64" >&2
   exit 1
