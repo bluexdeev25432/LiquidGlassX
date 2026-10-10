@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { Buffer } from 'node:buffer';
 import { PNG } from 'pngjs';
 
 test.beforeEach(async ({ page }) => {
@@ -55,7 +56,8 @@ test('desktop 3D canvas renders non-empty pixels', async ({ page }) => {
   const canvas = page.locator('canvas.hero-scene');
   await expect(canvas).toHaveAttribute('data-loaded', 'true', { timeout: 15_000 });
 
-  const image = PNG.sync.read(await canvas.screenshot());
+  const dataUrl = await canvas.evaluate((element: HTMLCanvasElement) => element.toDataURL());
+  const image = PNG.sync.read(Buffer.from(dataUrl.split(',')[1], 'base64'));
   let visiblePixels = 0;
   let coloredPixels = 0;
   for (let offset = 0; offset < image.data.length; offset += 4) {
