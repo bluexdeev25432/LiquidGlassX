@@ -7,6 +7,15 @@
 @interface UIStatusBar : UIView
 @end
 
+@interface SBIconView : UIView
+@end
+
+@interface SBFolderView : UIView
+@end
+
+@interface SBIconListView : UIView
+@end
+
 #define kLGXCompatibilityWarning "LiquidGlassX requires device validation before assuming runtime compatibility."
 
 static BOOL LGXShouldApply() {
@@ -56,6 +65,32 @@ static void LGXApplyGlassStyle(UIView *view) {
     }
 }
 
+static BOOL LGXShouldApplyHomeScreenTheme(void) {
+    if (![LGXManager isEnabled]) {
+        return NO;
+    }
+    if ([LGXManager isSafeModeEnabled]) {
+        return NO;
+    }
+    return [LGXManager isHomeScreenThemeEnabled];
+}
+
+static void LGXApplyHomeScreenGlass(UIView *view, CGFloat cornerRadius, CGFloat alpha, BOOL tinted) {
+    if (!view || !LGXShouldApplyHomeScreenTheme()) {
+        return;
+    }
+
+    view.layer.cornerRadius = cornerRadius;
+    view.layer.masksToBounds = YES;
+    view.layer.borderWidth = 1.0;
+    view.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.12].CGColor;
+    if (tinted) {
+        view.backgroundColor = [[LGXManager tintColor] colorWithAlphaComponent:alpha];
+    } else {
+        view.backgroundColor = [UIColor colorWithWhite:1.0 alpha:alpha];
+    }
+}
+
 %hook SpringBoard
 - (void)applicationDidFinishLaunching:(id)application {
     %orig;
@@ -89,6 +124,33 @@ static void LGXApplyGlassStyle(UIView *view) {
     if (LGXShouldApply()) {
         self.backgroundColor = [UIColor colorWithWhite:0.08 alpha:0.3];
         self.alpha = 1.0;
+    }
+}
+%end
+
+%hook SBIconView
+- (void)layoutSubviews {
+    %orig;
+    if (LGXShouldApplyHomeScreenTheme()) {
+        LGXApplyHomeScreenGlass(self, 18.0, 0.12, YES);
+    }
+}
+%end
+
+%hook SBFolderView
+- (void)layoutSubviews {
+    %orig;
+    if (LGXShouldApplyHomeScreenTheme() && [LGXManager isHomeScreenFolderGlassEnabled]) {
+        LGXApplyHomeScreenGlass(self, 22.0, 0.14, YES);
+    }
+}
+%end
+
+%hook SBIconListView
+- (void)layoutSubviews {
+    %orig;
+    if (LGXShouldApplyHomeScreenTheme() && [LGXManager isHomeScreenDockGlassEnabled]) {
+        LGXApplyHomeScreenGlass(self, 20.0, 0.08, YES);
     }
 }
 %end

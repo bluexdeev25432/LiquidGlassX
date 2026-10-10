@@ -48,6 +48,110 @@
         <key>cell</key>
         <string>PSGroupCell</string>
         <key>label</key>
+        <string>Home Screen</string>
+        <key>icon</key>
+        <string>IconGlassFull</string>
+        <key>footerText</key>
+        <string>Experimental Home Screen theme styling is opt-in and disabled by default. Unsupported effects remain off until device validation is complete.</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>label</key>
+        <string>Enable Home Screen Theme</string>
+        <key>icon</key>
+        <string>IconAdjustmentsHorizontal</string>
+        <key>key</key>
+        <string>LGXHomeScreenThemeEnabled</string>
+        <key>default</key>
+        <false/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSMultiValueCell</string>
+        <key>label</key>
+        <string>Preset</string>
+        <key>key</key>
+        <string>LGXHomeScreenPreset</string>
+        <key>default</key>
+        <string>Liquid Glass Dark</string>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+        <key>validTitles</key>
+        <array>
+            <string>Liquid Glass Dark</string>
+            <string>Liquid Glass Light</string>
+            <string>Clear Glass</string>
+            <string>Tinted Glass</string>
+            <string>Classic iOS</string>
+        </array>
+        <key>validValues</key>
+        <array>
+            <string>Liquid Glass Dark</string>
+            <string>Liquid Glass Light</string>
+            <string>Clear Glass</string>
+            <string>Tinted Glass</string>
+            <string>Classic iOS</string>
+        </array>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>label</key>
+        <string>Dock Glass</string>
+        <key>icon</key>
+        <string>IconAdjustmentsHorizontal</string>
+        <key>key</key>
+        <string>LGXHomeScreenDockGlassEnabled</string>
+        <key>default</key>
+        <false/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>label</key>
+        <string>Folder Glass</string>
+        <key>icon</key>
+        <string>IconGlassFull</string>
+        <key>key</key>
+        <string>LGXHomeScreenFolderGlassEnabled</string>
+        <key>default</key>
+        <false/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>label</key>
+        <string>Show Icon Labels</string>
+        <key>icon</key>
+        <string>IconShieldCheck</string>
+        <key>key</key>
+        <string>LGXHomeScreenLabelVisibilityEnabled</string>
+        <key>default</key>
+        <false/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>label</key>
         <string>Appearance</string>
     </dict>
     <dict>

@@ -10,6 +10,11 @@
 + (CGFloat)glassOpacity;
 + (UIColor *)tintColor;
 + (NSString *)appearanceMode;
++ (BOOL)isHomeScreenThemeEnabled;
++ (BOOL)isHomeScreenDockGlassEnabled;
++ (BOOL)isHomeScreenFolderGlassEnabled;
++ (BOOL)isHomeScreenLabelVisibilityEnabled;
++ (NSString *)homeScreenPreset;
 + (void)registerDefaults;
 + (void)applySettings;
 + (void)toggleEnabled:(BOOL)enabled;
@@ -20,6 +25,11 @@
 - (CGFloat)glassOpacity;
 - (UIColor *)tintColor;
 - (NSString *)appearanceMode;
+- (BOOL)isHomeScreenThemeEnabled;
+- (BOOL)isHomeScreenDockGlassEnabled;
+- (BOOL)isHomeScreenFolderGlassEnabled;
+- (BOOL)isHomeScreenLabelVisibilityEnabled;
+- (NSString *)homeScreenPreset;
 - (void)registerDefaults;
 - (void)applySettings;
 

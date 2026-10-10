@@ -9,6 +9,7 @@ The package has been built and inspected with Theos and an iPhoneOS SDK. **A suc
 - Rootless `iphoneos-arm64` Debian package with a SpringBoard hook, a Control Center view hook, and a conservative status-bar treatment.
 - Settings bundle with enable and safe-mode switches, blur and opacity sliders, appearance selection, tint text input, and reset action.
 - Shared `com.blue.liquidglassx` preferences domain with a Darwin notification for applying changed settings.
+- Experimental Home Screen theme controls for supported SpringBoard surfaces: an opt-in preset selector and safe glass styling hooks for Home Screen folders and dock-style surfaces are present, but they remain disabled by default and require device validation before they are considered supported.
 - Website with an interactive glass preview, brightness and volume controls, connectivity toggles, battery preview, appearance selector, tint/blur/opacity controls, and comparison slider.
 - Locally bundled Tabler icons for the website and Preferences, with icon and font sources recorded in [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
 - DEB identity/content verification, SHA-256 generation, release-manifest preparation, and Sileo APT index generation scripts.
@@ -26,6 +27,8 @@ Website mockups and “not verified” feature labels are previews, not proof th
 | Physical-device testing | Not performed |
 | Runtime-supported iOS versions | Not established |
 | Rootful jailbreaks, arm64e-specific behavior | Not verified |
+| Home Screen theme hooks | Experimental and opt-in only |
+| Supported SpringBoard surfaces | Dock, folder, icon list containers; label visibility and wallpaper tinting remain unverified |
 
 The deployment minimum is a package dependency declaration, not a tested support statement. The available build used the iPhoneOS 16.5 SDK; this does not imply that any iOS version or device is compatible.
 
@@ -37,7 +40,7 @@ The LiquidGlassX APT source is **not publicly deployed or signed**. Do not add a
 
 ## Usage
 
-After installing the package, open **Settings → LiquidGlassX**. Use **Enabled** to turn styling on or off. **Safe Mode** bypasses LiquidGlassX styling. Blur, opacity, appearance, and tint controls update the shared settings domain; Reset to Defaults restores the registered defaults. A Settings change is delivered through a Darwin notification, but live behavior still depends on the target system and has not been device-tested.
+After installing the package, open **Settings → LiquidGlassX**. Use **Enabled** to turn styling on or off. **Safe Mode** bypasses LiquidGlassX styling. Blur, opacity, appearance, and tint controls update the shared settings domain; Reset to Defaults restores the registered defaults. The new **Home Screen** section contains opt-in, device-validated-safe layout styling that remains disabled by default. A Settings change is delivered through a Darwin notification, but live behavior still depends on the target system and has not been device-tested.
 
 The website's preview controls only change the browser demonstration; they do not change an iPhone's settings.
 
@@ -60,6 +63,7 @@ ATTRIBUTIONS.md           Icon and font sources and licenses
 - **LiquidGlassX is missing from Settings:** confirm PreferenceLoader is installed, then restart Settings or perform the jailbreak's supported userspace restart.
 - **The visual effect is absent:** verify Enabled is on and Safe Mode is off. Private framework classes and system layouts vary; absence of an effect is not evidence that an unsupported device should be forced to install it.
 - **SpringBoard or Control Center becomes unstable:** use the jailbreak's safe mode to disable/remove the tweak. If Settings is accessible, enable Safe Mode; otherwise remove the package from the package manager or recovery environment.
+- **Home Screen styling behaves oddly:** keep the Home Screen Theme toggle disabled until the target device has been validated; the default for the Home Screen section is off to avoid unsafe global hooks and to prevent broad SpringBoard changes on unverified layouts.
 - **A download or checksum does not match:** do not install the file. Compare it with the SHA-256 value shown for the same GitHub Release and report the mismatch in the issue tracker.
 - **The Sileo source is unavailable:** this is expected until the repository has signed metadata and package URLs deployed over HTTPS.
 

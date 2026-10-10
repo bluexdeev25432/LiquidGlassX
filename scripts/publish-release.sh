@@ -2,7 +2,10 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPOSITORY="${GITHUB_REPOSITORY:-bluexdeev25432/LiquidGlassX}"
+REPOSITORY="${GITHUB_REPOSITORY:-}"
+if [[ -z "$REPOSITORY" ]]; then
+  REPOSITORY="$(git -C "$ROOT_DIR" config --get remote.origin.url | sed -E 's#https://github.com/##; s#git@github.com:##; s#\.git$##')"
+fi
 
 if [[ $# -ne 1 ]]; then
   echo "Usage: $0 /path/to/verified-liquidglassx.deb" >&2

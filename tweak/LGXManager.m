@@ -7,6 +7,11 @@
 @property (nonatomic, assign) CGFloat glassOpacity;
 @property (nonatomic, strong) UIColor *tintColor;
 @property (nonatomic, copy) NSString *appearanceMode;
+@property (nonatomic, assign) BOOL homeScreenThemeEnabled;
+@property (nonatomic, assign) BOOL homeScreenDockGlassEnabled;
+@property (nonatomic, assign) BOOL homeScreenFolderGlassEnabled;
+@property (nonatomic, assign) BOOL homeScreenLabelVisibilityEnabled;
+@property (nonatomic, copy) NSString *homeScreenPreset;
 @end
 
 static NSUserDefaults *LGXPreferencesDefaults(void) {
@@ -62,6 +67,46 @@ static void LGXPreferencesChanged(CFNotificationCenterRef center, void *observer
     return [[LGXManager sharedInstance] appearanceMode];
 }
 
++ (BOOL)isHomeScreenThemeEnabled {
+    return [[LGXManager sharedInstance] isHomeScreenThemeEnabled];
+}
+
+- (BOOL)isHomeScreenThemeEnabled {
+    return self.homeScreenThemeEnabled;
+}
+
++ (BOOL)isHomeScreenDockGlassEnabled {
+    return [[LGXManager sharedInstance] isHomeScreenDockGlassEnabled];
+}
+
+- (BOOL)isHomeScreenDockGlassEnabled {
+    return self.homeScreenDockGlassEnabled;
+}
+
++ (BOOL)isHomeScreenFolderGlassEnabled {
+    return [[LGXManager sharedInstance] isHomeScreenFolderGlassEnabled];
+}
+
+- (BOOL)isHomeScreenFolderGlassEnabled {
+    return self.homeScreenFolderGlassEnabled;
+}
+
++ (BOOL)isHomeScreenLabelVisibilityEnabled {
+    return [[LGXManager sharedInstance] isHomeScreenLabelVisibilityEnabled];
+}
+
+- (BOOL)isHomeScreenLabelVisibilityEnabled {
+    return self.homeScreenLabelVisibilityEnabled;
+}
+
++ (NSString *)homeScreenPreset {
+    return [[LGXManager sharedInstance] homeScreenPreset];
+}
+
+- (NSString *)homeScreenPreset {
+    return _homeScreenPreset ?: @"Liquid Glass Dark";
+}
+
 + (void)registerDefaults {
     [[LGXManager sharedInstance] registerDefaults];
 }
@@ -73,7 +118,12 @@ static void LGXPreferencesChanged(CFNotificationCenterRef center, void *observer
         @"LGXBlurIntensity": @20.0,
         @"LGXGlassOpacity": @0.68,
         @"LGXAppearanceMode": @"Dark",
-        @"LGXTintColor": @"#7AA2FF"
+        @"LGXTintColor": @"#7AA2FF",
+        @"LGXHomeScreenThemeEnabled": @NO,
+        @"LGXHomeScreenPreset": @"Liquid Glass Dark",
+        @"LGXHomeScreenDockGlassEnabled": @NO,
+        @"LGXHomeScreenFolderGlassEnabled": @NO,
+        @"LGXHomeScreenLabelVisibilityEnabled": @NO
     };
 
     [LGXPreferencesDefaults() registerDefaults:defaults];
@@ -91,6 +141,11 @@ static void LGXPreferencesChanged(CFNotificationCenterRef center, void *observer
     self.blurIntensity = [defaults objectForKey:@"LGXBlurIntensity"] ? [[defaults objectForKey:@"LGXBlurIntensity"] doubleValue] : 20.0;
     self.glassOpacity = [defaults objectForKey:@"LGXGlassOpacity"] ? [[defaults objectForKey:@"LGXGlassOpacity"] doubleValue] : 0.68;
     self.appearanceMode = [defaults objectForKey:@"LGXAppearanceMode"] ? [defaults objectForKey:@"LGXAppearanceMode"] : @"Dark";
+    self.homeScreenThemeEnabled = [defaults objectForKey:@"LGXHomeScreenThemeEnabled"] ? [[defaults objectForKey:@"LGXHomeScreenThemeEnabled"] boolValue] : NO;
+    self.homeScreenDockGlassEnabled = [defaults objectForKey:@"LGXHomeScreenDockGlassEnabled"] ? [[defaults objectForKey:@"LGXHomeScreenDockGlassEnabled"] boolValue] : NO;
+    self.homeScreenFolderGlassEnabled = [defaults objectForKey:@"LGXHomeScreenFolderGlassEnabled"] ? [[defaults objectForKey:@"LGXHomeScreenFolderGlassEnabled"] boolValue] : NO;
+    self.homeScreenLabelVisibilityEnabled = [defaults objectForKey:@"LGXHomeScreenLabelVisibilityEnabled"] ? [[defaults objectForKey:@"LGXHomeScreenLabelVisibilityEnabled"] boolValue] : NO;
+    self.homeScreenPreset = [defaults objectForKey:@"LGXHomeScreenPreset"] ? [defaults objectForKey:@"LGXHomeScreenPreset"] : @"Liquid Glass Dark";
 
     NSString *hexColor = [defaults objectForKey:@"LGXTintColor"] ?: @"#9CE8D0";
     if ([hexColor hasPrefix:@"#"] && (hexColor.length == 7 || hexColor.length == 9)) {
@@ -122,6 +177,11 @@ static void LGXPreferencesChanged(CFNotificationCenterRef center, void *observer
         self.blurIntensity = 20.0;
         self.glassOpacity = 0.68;
         self.appearanceMode = @"Dark";
+        self.homeScreenThemeEnabled = NO;
+        self.homeScreenDockGlassEnabled = NO;
+        self.homeScreenFolderGlassEnabled = NO;
+        self.homeScreenLabelVisibilityEnabled = NO;
+        self.homeScreenPreset = @"Liquid Glass Dark";
         self.tintColor = [UIColor systemBlueColor];
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)self,
                         LGXPreferencesChanged, CFSTR("com.blue.liquidglassx/preferences.changed"),

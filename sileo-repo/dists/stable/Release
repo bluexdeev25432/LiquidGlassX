@@ -1,20 +1,20 @@
 Architectures: iphoneos-arm64
 Codename: stable
 Components: main
-Date: Sat, 10 Oct 2026 16:14:16 +0000
+Date: Sat, 10 Oct 2026 17:05:50 +0000
 Description: LiquidGlassX rootless jailbreak packages
 Label: LiquidGlassX
 Origin: LiquidGlassX
 Suite: stable
 MD5Sum:
- 5acbda99d5808273f7ef7261bc065ce1              802 main/binary-iphoneos-arm64/Packages
- 6549dfc46b1d729f4ccda4f1e61805e7              544 main/binary-iphoneos-arm64/Packages.gz
+ b3e0546898149596750ba592faa9f132             1605 main/binary-iphoneos-arm64/Packages
+ 9f571d06b74b52b2a66f7bc3e3c0a7e8              672 main/binary-iphoneos-arm64/Packages.gz
 SHA1:
- df552f81af81bb10ef5e56278d39d8383a8769c3              802 main/binary-iphoneos-arm64/Packages
- 2440ade1219690216444979b69513859d4fa9cba              544 main/binary-iphoneos-arm64/Packages.gz
+ 4c600411721b89fdce81ea92f56f095163e3dd80             1605 main/binary-iphoneos-arm64/Packages
+ 8033c9ca9a90fb0b6e06dcb39c4f75a5fa20be76              672 main/binary-iphoneos-arm64/Packages.gz
 SHA256:
- 24ccb96704666ddf43d8ba84468e726b3865010526862c3069b4a5a978657bd4              802 main/binary-iphoneos-arm64/Packages
- 500dbe6bee518d76a915d92cbc4db966b3504ea90fabaab40715d6b7d0742762              544 main/binary-iphoneos-arm64/Packages.gz
+ dc7e97940695c7a835d5bb85611f9065706c2a460ae0266af315198b4e3d96e5             1605 main/binary-iphoneos-arm64/Packages
+ 16e4e9224a3fc0ef9b92e272f394e9e0e874287185491f013adc463ecdf1a9d3              672 main/binary-iphoneos-arm64/Packages.gz
 SHA512:
- 7a9a54b6a6f97c8d22b9df895905a0a126954878bee58e2f86115071a5afea1abbd4aba32c8f7ed850cd758bb839adb83f2174f0e7b27b462d5d06bf31cbd15e              802 main/binary-iphoneos-arm64/Packages
- 2cd1b440936b779326cedeab9001bee063b1ce0976eecfbe5b116edcde71923de6ee2faee47fa14f4189024124f5cd649afde29461051f7c6663819046f89c5c              544 main/binary-iphoneos-arm64/Packages.gz
+ e14174ce89c292607931907ab206bc43e71453367154eec572b2a175443313ebaf339bfd0ae51b5a24f27c7bc9a2b9943d73bcc807d49b19b2b1168e149b6966             1605 main/binary-iphoneos-arm64/Packages
+ 3e52cff8b33c5f5129c4c4e24df7717494ba01efb27b331efed1162f97963772299be3833157b8942dd971999c70cf7649648dd3e3e8ee11bd5c7c4bd8f1d664              672 main/binary-iphoneos-arm64/Packages.gz
