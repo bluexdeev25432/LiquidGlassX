@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+    <dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>label</key>
+        <string>Liquid Glass</string>
+        <key>icon</key>
+        <string>IconGlassFull</string>
+        <key>footerText</key>
+        <string>Settings are experimental. Safe Mode bypasses all LiquidGlassX styling.</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>label</key>
+        <string>Enabled</string>
+        <key>icon</key>
+        <string>IconAdjustmentsHorizontal</string>
+        <key>key</key>
+        <string>LGXEnabled</string>
+        <key>default</key>
+        <true/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>label</key>
+        <string>Safe Mode</string>
+        <key>icon</key>
+        <string>IconShieldCheck</string>
+        <key>key</key>
+        <string>LGXSafeMode</string>
+        <key>default</key>
+        <false/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>label</key>
+        <string>Appearance</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSliderCell</string>
+        <key>label</key>
+        <string>Blur Intensity</string>
+        <key>key</key>
+        <string>LGXBlurIntensity</string>
+        <key>default</key>
+        <real>20</real>
+        <key>min</key>
+        <real>0</real>
+        <key>max</key>
+        <real>42</real>
+        <key>showValue</key>
+        <true/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSSliderCell</string>
+        <key>label</key>
+        <string>Glass Opacity</string>
+        <key>key</key>
+        <string>LGXGlassOpacity</string>
+        <key>default</key>
+        <real>0.68</real>
+        <key>min</key>
+        <real>0.2</real>
+        <key>max</key>
+        <real>1</real>
+        <key>showValue</key>
+        <true/>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSMultiValueCell</string>
+        <key>label</key>
+        <string>Appearance Mode</string>
+        <key>key</key>
+        <string>LGXAppearanceMode</string>
+        <key>default</key>
+        <string>Dark</string>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+        <key>validTitles</key>
+        <array>
+            <string>Dark</string>
+            <string>Light</string>
+            <string>System</string>
+        </array>
+        <key>validValues</key>
+        <array>
+            <string>Dark</string>
+            <string>Light</string>
+            <string>System</string>
+        </array>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSEditTextCell</string>
+        <key>label</key>
+        <string>Tint Color</string>
+        <key>icon</key>
+        <string>IconColorFilter</string>
+        <key>key</key>
+        <string>LGXTintColor</string>
+        <key>default</key>
+        <string>#9CE8D0</string>
+        <key>placeholder</key>
+        <string>#9CE8D0</string>
+        <key>defaults</key>
+        <string>com.blue.liquidglassx</string>
+        <key>PostNotification</key>
+        <string>com.blue.liquidglassx/preferences.changed</string>
+    </dict>
+    <dict>
+        <key>cell</key>
+        <string>PSButtonCell</string>
+        <key>label</key>
+        <string>Reset to Defaults</string>
+        <key>action</key>
+        <string>resetSettings</string>
+    </dict>
+</array>
+</plist>

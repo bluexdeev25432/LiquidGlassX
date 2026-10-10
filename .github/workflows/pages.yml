@@ -1,0 +1,72 @@
+name: Deploy LiquidGlassX website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        working-directory: website
+        run: npm ci
+
+      - name: Build production site
+        working-directory: website
+        env:
+          CI: true
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: npm run build
+
+      - name: Include signed Sileo repository when available
+        shell: bash
+        run: |
+          if [[ -f sileo-repo/dists/stable/InRelease && -f sileo-repo/dists/stable/Release.gpg && -f sileo-repo/public-key.asc ]]; then
+            mkdir -p website/dist/sileo
+            cp -a sileo-repo/. website/dist/sileo/
+          else
+            echo "Sileo repository is not signed and remains unpublished."
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

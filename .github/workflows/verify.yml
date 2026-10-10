@@ -1,0 +1,51 @@
+name: Verify LiquidGlassX website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install dependencies
+        working-directory: website
+        run: npm ci
+
+      - name: Type check
+        working-directory: website
+        run: npm run typecheck
+
+      - name: Production build
+        working-directory: website
+        env:
+          CI: true
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: npm run build
+
+      - name: Dependency audit
+        working-directory: website
+        run: npm audit
+
+      - name: Install Chromium for browser tests
+        working-directory: website
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests
+        working-directory: website
+        run: npm run test:e2e

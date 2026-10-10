@@ -1,0 +1,13 @@
+Package: com.blue.liquidglassx
+Name: LiquidGlassX
+Version: 0.0.1
+Architecture: arm64
+Description: iOS 27-inspired liquid glass styling for selected system surfaces.
+ This experimental rootless tweak includes configurable blur, tint, opacity, and a safe-mode switch.
+Maintainer: LiquidGlassX Team
+Author: LiquidGlassX Team
+Section: Tweaks
+Depends: firmware (>= 15.0), mobilesubstrate, preferenceloader
+Priority: optional
+Tag: role::hacker
+Homepage: https://github.com/bluexdeev25432/LiquidGlassX

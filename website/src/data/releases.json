@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1-5+debug",
+  "packageIdentifier": "com.blue.liquidglassx",
+  "filename": "com.blue.liquidglassx_0.0.1-5+debug_iphoneos-arm64.deb",
+  "downloadPath": "",
+  "architecture": "iphoneos-arm64",
+  "fileSize": "0.02 MB",
+  "sha256": "778efdfe1756ff6af196f95d949f481999cd39a2582d6e7257de7208d26d7efd",
+  "releaseDate": "2026-10-10",
+  "testedIosVersions": [
+    "Not yet device verified"
+  ],
+  "changelog": "See CHANGELOG.md",
+  "verificationStatus": "Verified package; GitHub Release pending",
+  "downloadEnabled": false
+}

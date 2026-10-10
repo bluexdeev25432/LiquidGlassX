@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.vite/
+*.zip
+.DS_Store
+*.log
+*.swp
+*.orig
+
+# Theos build outputs
+.theos/
+obj/
+tweak/packages/*.deb
+website/public/downloads/*.deb
+releases/*.deb
+releases/checksums/*.sha256
+
+# Never commit signing material or local credentials.
+*.gpg-secret
+*.asc-secret
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
