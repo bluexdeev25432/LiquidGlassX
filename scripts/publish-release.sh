@@ -25,6 +25,7 @@ else
   gh release create "$TAG" "$PACKAGE_PATH" \
     --repo "$REPOSITORY" \
     --title "LiquidGlassX $VERSION" \
+    --prerelease \
     --notes-file "$ROOT_DIR/CHANGELOG.md"
 fi
 
