@@ -1,6 +1,6 @@
 name: Deploy LiquidGlassX website
 
-on:
+'on':
   push:
     branches: [main]
   workflow_dispatch:
