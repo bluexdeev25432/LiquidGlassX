@@ -19,13 +19,19 @@ fi
 RELEASE_FILE="$REPO_DIR/dists/stable/Release"
 PACKAGES_FILE="$REPO_DIR/dists/stable/main/binary-iphoneos-arm64/Packages"
 PACKAGES_GZ="$REPO_DIR/dists/stable/main/binary-iphoneos-arm64/Packages.gz"
+INDEX_FILE="$REPO_DIR/index.html"
 
-for required in "$RELEASE_FILE" "$PACKAGES_FILE" "$PACKAGES_GZ"; do
+for required in "$INDEX_FILE" "$RELEASE_FILE" "$PACKAGES_FILE" "$PACKAGES_GZ"; do
   if [[ ! -f "$required" ]]; then
     echo "[LiquidGlassX] Missing required Sileo metadata: $required" >&2
     exit 1
   fi
 done
+
+if ! grep -Fq 'deb https://bluexdeev25432.github.io/LiquidGlassX/sileo/' "$INDEX_FILE"; then
+  echo "[LiquidGlassX] Sileo landing page is missing the repository source entry" >&2
+  exit 1
+fi
 
 if ! gzip -t "$PACKAGES_GZ"; then
   echo "[LiquidGlassX] Broken gzip payload for Packages.gz" >&2
