@@ -15,11 +15,17 @@ fi
 PACKAGE_PATH="$(realpath "$1")"
 "$ROOT_DIR/scripts/verify-deb.sh" "$PACKAGE_PATH"
 
+PACKAGE_ID="$(dpkg-deb -f "$PACKAGE_PATH" Package)"
+PACKAGE_ARCH="$(dpkg-deb -f "$PACKAGE_PATH" Architecture)"
+PACKAGE_VERSION="$(dpkg-deb -f "$PACKAGE_PATH" Version)"
+PACKAGE_FILENAME="$(basename "$PACKAGE_PATH")"
+
 mkdir -p "$PACKAGE_DIR" "$INDEX_DIR"
+find "$PACKAGE_DIR" -maxdepth 1 -type f -name '*.deb' -delete
 cp "$PACKAGE_PATH" "$PACKAGE_DIR/"
 
 cd "$REPO_DIR"
-dpkg-scanpackages --arch iphoneos-arm64 --multiversion pool /dev/null > "$INDEX_DIR/Packages"
+dpkg-scanpackages --arch "$PACKAGE_ARCH" --multiversion pool /dev/null > "$INDEX_DIR/Packages"
 sed -i '${/^$/d;}' "$INDEX_DIR/Packages"
 gzip -9c "$INDEX_DIR/Packages" > "$INDEX_DIR/Packages.gz"
 
@@ -37,5 +43,7 @@ if [[ -n "${GPG_KEY_ID:-}" ]]; then
     --output dists/stable/Release.gpg dists/stable/Release
   echo "[LiquidGlassX] Signed APT metadata generated. Review and deploy sileo-repo/ before advertising the source."
 else
-  echo "[LiquidGlassX] Unsigned repository metadata generated locally; Sileo source is not ready for public installation." >&2
+  echo "[LiquidGlassX] Unsigned repository metadata generated locally. This repository is intentionally published without a configured signing key."
 fi
+
+echo "[LiquidGlassX] Repository metadata points to $PACKAGE_ID $PACKAGE_VERSION ($PACKAGE_ARCH) at $PACKAGE_FILENAME"
